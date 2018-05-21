@@ -1,3 +1,4 @@
+//init vals
 var playerXTurn = true;
 var pieceCount = 0;
 var xScore = 0;
@@ -6,6 +7,7 @@ var lastWin = null;
 var p1Name = null;
 var p2Name = null;
 
+//Create board
 var boardPieces = [["1-1","1-2","1-3"],["2-1","2-2","2-3"],["3-1","3-2","3-3"]];
 var boardPiecesCol = [["1-1","2-1","3-1"],["1-2","2-2","3-2"],["1-3","2-3","3-3"]];
 var majDiag = [["1-1","2-2","3-3"]];
@@ -61,9 +63,11 @@ function checkForWin() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    //initialize scores
     document.getElementById("xscore").innerHTML = "(X) Score: " + xScore;
     document.getElementById("oscore").innerHTML = "(O) Score: " + oScore;
 
+    //Deal with player 1 and player 2 Submissions
     document.getElementById("p1").addEventListener("keyup", function(e){
         if (e.keyCode === 13){
             document.getElementById("xscore").innerHTML = e.target.value + " " + document.getElementById("xscore").innerHTML;

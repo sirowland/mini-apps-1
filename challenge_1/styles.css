@@ -10,7 +10,9 @@ h1 {
 
 .playerBox {
     align-self: center;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .scoreBox {
@@ -19,6 +21,10 @@ h1 {
 
 #table {
     align-self: center;
+}
+
+#p1, #p2 {
+    font-family: 'Courier New';
 }
 
 .rowContainer {
