@@ -1,5 +1,7 @@
 var playerXTurn = true;
 var pieceCount = 0;
+var xScore = 0;
+var oScore = 0;
 var boardPieces = [["1-1","1-2","1-3"],["2-1","2-2","2-3"],["3-1","3-2","3-3"]];
 var boardPiecesCol = [["1-1","2-1","3-1"],["1-2","2-2","3-2"],["1-3","2-3","3-3"]];
 var majDiag = [["1-1","2-2","3-3"]];
@@ -10,16 +12,16 @@ function placePiece(domElement) {
     var id = domElement.id;
 
     //check if piece already placed
-    if (document.getElementById(id).innerHTML === "[x]" || document.getElementById(id).innerHTML === "[o]") {
+    if (document.getElementById(id).innerHTML === "X" || document.getElementById(id).innerHTML === "O") {
         return;
     }
 
     //place piece and flip turn
     if (playerXTurn === true) {
-        document.getElementById(id).innerHTML = "[x]";
+        document.getElementById(id).innerHTML = "X";
         playerXTurn = !playerXTurn;
     } else {
-        document.getElementById(id).innerHTML = "[o]"
+        document.getElementById(id).innerHTML = "O"
         playerXTurn = !playerXTurn;        
     }
 }
@@ -27,10 +29,9 @@ function placePiece(domElement) {
 function checkForWin() {
 
     function check() {
-        //checks horizontal direction;
         for (var i = 0; i < board.length; i++) {
-            var xWin = board[i].every((piece) => document.getElementById(piece).innerHTML === "[x]");
-            var oWin = board[i].every((piece) => document.getElementById(piece).innerHTML === "[o]");
+            var xWin = board[i].every((piece) => document.getElementById(piece).innerHTML === "X");
+            var oWin = board[i].every((piece) => document.getElementById(piece).innerHTML === "O");
             
             if (xWin) {
                 return "x"
@@ -43,8 +44,12 @@ function checkForWin() {
     var win = check();
     
     if (win === "x") {
+        xScore++;
+        document.getElementById("xscore").innerHTML = 'X Score: ' + xScore;
         return "X Wins!";
     } else if (win === "o") {
+        oScore++;
+        document.getElementById("oscore").innerHTML = 'O Score: ' + oScore;
         return "O Wins!";
     } else if (pieceCount === 9) {
         return "Tied!"
@@ -52,6 +57,8 @@ function checkForWin() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("xscore").innerHTML = 'X Score: ' + xScore;
+    document.getElementById("oscore").innerHTML = 'O Score: ' + oScore;
 
     //initialization add event listeners
     for (var i = 0; i < boardPieces.length; i++) {
@@ -73,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("reset").addEventListener("click", function() {
         for (var i = 0; i < boardPieces.length; i++) {
             for (var j = 0; j < boardPieces[i].length; j++) {
-                document.getElementById(boardPieces[i][j]).innerHTML = "[]";
+                document.getElementById(boardPieces[i][j]).innerHTML = "_";
             }
         }
         playerXTurn = true;
