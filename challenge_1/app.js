@@ -3,6 +3,8 @@ var pieceCount = 0;
 var xScore = 0;
 var oScore = 0;
 var lastWin = null;
+var p1Name = null;
+var p2Name = null;
 
 var boardPieces = [["1-1","1-2","1-3"],["2-1","2-2","2-3"],["3-1","3-2","3-3"]];
 var boardPiecesCol = [["1-1","2-1","3-1"],["1-2","2-2","3-2"],["1-3","2-3","3-3"]];
@@ -47,11 +49,11 @@ function checkForWin() {
     
     if (win === "x") {
         xScore++;
-        document.getElementById("xscore").innerHTML = 'X Score: ' + xScore;
+        document.getElementById("xscore").innerHTML =  p1Name ? p1Name + " (X) Score: " + xScore : " (X) Score: " + xScore;
         return "X Wins!";
     } else if (win === "o") {
         oScore++;
-        document.getElementById("oscore").innerHTML = 'O Score: ' + oScore;
+        document.getElementById("oscore").innerHTML =  p2Name ? p2Name + " (O) Score: " + oScore : " (O) Score: " + oScore;
         return "O Wins!";
     } else if (pieceCount === 9) {
         return "Tied!"
@@ -59,8 +61,24 @@ function checkForWin() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("xscore").innerHTML = 'X Score: ' + xScore;
-    document.getElementById("oscore").innerHTML = 'O Score: ' + oScore;
+    document.getElementById("xscore").innerHTML = "(X) Score: " + xScore;
+    document.getElementById("oscore").innerHTML = "(O) Score: " + oScore;
+
+    document.getElementById("p1").addEventListener("keyup", function(e){
+        if (e.keyCode === 13){
+            document.getElementById("xscore").innerHTML = e.target.value + " " + document.getElementById("xscore").innerHTML;
+            p1Name = e.target.value; 
+            document.getElementById("p1").remove();
+        }
+    });
+
+    document.getElementById("p2").addEventListener("keyup", function(e){
+        if (e.keyCode === 13){
+            document.getElementById("oscore").innerHTML = e.target.value + " " + document.getElementById("oscore").innerHTML; 
+            p2Name = e.target.value;
+            document.getElementById("p2").remove();
+        }
+    });
 
     //initialization add event listeners
     for (var i = 0; i < boardPieces.length; i++) {
@@ -83,18 +101,18 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("reset").addEventListener("click", function() {
         for (var i = 0; i < boardPieces.length; i++) {
             for (var j = 0; j < boardPieces[i].length; j++) {
-                document.getElementById(boardPieces[i][j]).innerHTML = "_";
+                document.getElementById(boardPieces[i][j]).innerHTML = "";
             }
         }
 
         //REINITIALIZE BOARD
         //check who won last
-        if (lastWin === 'X') {
+        if (lastWin === "X") {
             playerXTurn = true;
         } else {
             playerXTurn = false;
         }
         pieceCount = 0;
-        document.getElementById("result").innerHTML = '';
+        document.getElementById("result").innerHTML = "";
     })
 });
