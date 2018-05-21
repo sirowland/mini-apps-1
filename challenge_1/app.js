@@ -2,6 +2,8 @@ var playerXTurn = true;
 var pieceCount = 0;
 var xScore = 0;
 var oScore = 0;
+var lastWin = null;
+
 var boardPieces = [["1-1","1-2","1-3"],["2-1","2-2","2-3"],["3-1","3-2","3-3"]];
 var boardPiecesCol = [["1-1","2-1","3-1"],["1-2","2-2","3-2"],["1-3","2-3","3-3"]];
 var majDiag = [["1-1","2-2","3-3"]];
@@ -70,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var output = checkForWin();
 
                 if (output) {
+                    lastWin = output[0];
                     document.getElementById("result").innerHTML = output;
                 }
             })
@@ -83,7 +86,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById(boardPieces[i][j]).innerHTML = "_";
             }
         }
-        playerXTurn = true;
+
+        //REINITIALIZE BOARD
+        //check who won last
+        if (lastWin === 'X') {
+            playerXTurn = true;
+        } else {
+            playerXTurn = false;
+        }
         pieceCount = 0;
         document.getElementById("result").innerHTML = '';
     })
