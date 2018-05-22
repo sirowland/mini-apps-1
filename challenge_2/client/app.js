@@ -10,8 +10,6 @@ $(document).ready(function(){
             data: data,
             contentType: 'application/json',
             success: function(data) {
-                console.log('RESPONSE DATA:', data);
-
                 $('#response').html(data); 
                 $('#jsonSubmit').val('');
             },

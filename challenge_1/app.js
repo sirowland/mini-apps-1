@@ -88,7 +88,7 @@ var view = {
                     document.getElementById("p1").remove();
                 }
             });
-    c
+            
             document.getElementById("p2").addEventListener("keyup", function(e){
                 if (e.keyCode === 13){
                     view.setInner("oscore", e.target.value + " " + view.getInner("oscore"));
