@@ -25,6 +25,7 @@ h1 {
 
 #p1, #p2 {
     font-family: 'Courier New';
+    outline: none;
 }
 
 .rowContainer {
@@ -48,4 +49,5 @@ h1 {
     align-self: center;
     width: 150px;
     height: 50px;
+    outline: none;
 }
