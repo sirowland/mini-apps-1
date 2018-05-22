@@ -19,10 +19,56 @@ app.use(function(req, res, next) {
 // });
 
 app.post('/', (req, res) => {
-    console.log(req.body);
-
-    
+    toCSV(req.body, function(data){
+        res.send(data);
+    });
 });
 
 app.listen(1337, () => console.log('Listening on port 1337...'));
 
+
+
+
+function toCSV (object, callback) {
+    var data;
+
+    //get keys
+    data = getKeys(object)
+    
+    //iterate through all children
+    writeRow(object);
+
+    callback(data);
+}
+
+function getKeys (obj) {
+    var keysRow = [];
+    
+    for (var key in obj) {
+        if (key !== 'children') {
+            keysRow.push(key);
+        }
+    }
+
+    return keysRow.join(',') + '<br>';
+}
+
+function writeRow (obj) {
+    var arr = [];
+
+    for (var key in obj) {
+        if (key !== 'children') {
+            arr.push(obj[key]);
+        }
+    }
+
+    return arr.join(',') + '<br>';
+}
+
+function writeRows (obj) {
+    if (children.length === 0) {
+    
+    } else {
+    
+    }
+}
