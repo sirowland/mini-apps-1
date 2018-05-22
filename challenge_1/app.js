@@ -83,7 +83,7 @@ var view = {
             //Deal with player 1 and player 2 Submissions
             document.getElementById("p1").addEventListener("keyup", function(e){
                 if (e.keyCode === 13){
-                    document.getElementById("xscore").innerHTML = e.target.value + " " + document.getElementById("xscore").innerHTML;
+                    view.setInner("xscore", e.target.value + " " + view.getInner("xscore"));
                     view.p1Name = e.target.value; 
                     document.getElementById("p1").remove();
                 }
@@ -91,7 +91,7 @@ var view = {
         
             document.getElementById("p2").addEventListener("keyup", function(e){
                 if (e.keyCode === 13){
-                    document.getElementById("oscore").innerHTML = e.target.value + " " + document.getElementById("oscore").innerHTML; 
+                    view.setInner("oscore", e.target.value + " " + view.getInner("oscore"));
                     view.p2Name = e.target.value;
                     document.getElementById("p2").remove();
                 }
