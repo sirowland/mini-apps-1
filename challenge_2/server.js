@@ -30,45 +30,46 @@ app.listen(1337, () => console.log('Listening on port 1337...'));
 
 
 function toCSV (object, callback) {
-    var data;
+    var keys;
+    var values = '';
 
     //get keys
-    data = getKeys(object)
-    
-    //iterate through all children
-    writeRow(object);
+    keys = getKeys(object)
 
-    callback(data);
+
+    function writeRows (obj) {
+
+        values += writeRow(obj);
+
+        if (obj.children.length === 0) {
+            return;
+        } else {
+            for (var i = 0; i < obj.children.length; i++) {
+                writeRows(obj.children[i]);
+            }
+        }
+    }
+
+    writeRows(object);
+    callback(keys + values);
 }
 
 function getKeys (obj) {
     var keysRow = [];
-    
     for (var key in obj) {
         if (key !== 'children') {
             keysRow.push(key);
         }
     }
-
     return keysRow.join(',') + '<br>';
 }
 
 function writeRow (obj) {
     var arr = [];
-
     for (var key in obj) {
         if (key !== 'children') {
             arr.push(obj[key]);
         }
     }
-
     return arr.join(',') + '<br>';
-}
-
-function writeRows (obj) {
-    if (children.length === 0) {
-    
-    } else {
-    
-    }
 }
