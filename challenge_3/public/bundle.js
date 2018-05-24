@@ -118,7 +118,7 @@ var App = function (_React$Component) {
                 null,
                 this.state.currentForm === 'home' ? React.createElement(
                     'button',
-                    { onClick: function onClick() {
+                    { id: 'checkout', onClick: function onClick() {
                             return _this2.nextStep();
                         } },
                     'Checkout'
@@ -168,7 +168,7 @@ var Checkout = function (_React$Component2) {
                     'form',
                     { id: 'userInfo' },
                     React.createElement(
-                        'h1',
+                        'h2',
                         null,
                         'User Info'
                     ),
@@ -185,19 +185,23 @@ var Checkout = function (_React$Component2) {
                             return _this4.onInputChange('password', e.target.value);
                         }, value: this.state.password }),
                     React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                return _this4.props.prevStep();
-                            } },
-                        'Back Home'
-                    ),
-                    React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                _this4.props.nextStep();
-                                _this4.props.sendState(_this4.state);
-                            } },
-                        'On to Shipping Address!'
+                        'div',
+                        { className: 'nextBackContainer' },
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    return _this4.props.prevStep();
+                                } },
+                            '<<<'
+                        ),
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    _this4.props.nextStep();
+                                    _this4.props.sendState(_this4.state);
+                                } },
+                            '>>>'
+                        )
                     )
                 );
             } else {
@@ -243,7 +247,7 @@ var Address = function (_React$Component3) {
                     'form',
                     { id: 'address' },
                     React.createElement(
-                        'h1',
+                        'h2',
                         null,
                         'Address'
                     ),
@@ -272,19 +276,23 @@ var Address = function (_React$Component3) {
                             return _this6.onInputChange('phone', e.target.value);
                         }, value: this.state.phone }),
                     React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                return _this6.props.prevStep();
-                            } },
-                        'Back to User Info'
-                    ),
-                    React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                _this6.props.nextStep();
-                                _this6.props.sendState(_this6.state);
-                            } },
-                        'On to Credit Card Info!'
+                        'div',
+                        { className: 'nextBackContainer' },
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    return _this6.props.prevStep();
+                                } },
+                            '<<<'
+                        ),
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    _this6.props.nextStep();
+                                    _this6.props.sendState(_this6.state);
+                                } },
+                            '>>>'
+                        )
                     )
                 );
             } else {
@@ -328,9 +336,9 @@ var Ccinfo = function (_React$Component4) {
                     'form',
                     { id: 'ccInfo' },
                     React.createElement(
-                        'h1',
+                        'h2',
                         null,
-                        'Credit Card Info'
+                        'Credit Card'
                     ),
                     'Credit Card Number:',
                     React.createElement('input', { type: 'text', onChange: function onChange(e) {
@@ -349,19 +357,23 @@ var Ccinfo = function (_React$Component4) {
                             return _this8.onInputChange('billZip', e.target.value);
                         }, value: this.state.billZip }),
                     React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                return _this8.props.prevStep();
-                            } },
-                        'Back to Address'
-                    ),
-                    React.createElement(
-                        'button',
-                        { type: 'button', onClick: function onClick() {
-                                _this8.props.nextStep();
-                                _this8.props.sendState(_this8.state);
-                            } },
-                        'Summary'
+                        'div',
+                        { className: 'nextBackContainer' },
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    return _this8.props.prevStep();
+                                } },
+                            '<<<'
+                        ),
+                        React.createElement(
+                            'button',
+                            { className: 'nextBack', type: 'button', onClick: function onClick() {
+                                    _this8.props.nextStep();
+                                    _this8.props.sendState(_this8.state);
+                                } },
+                            '>>>'
+                        )
                     )
                 );
             } else {
@@ -377,11 +389,11 @@ var Confirmation = function Confirmation(props) {
     if (props.currentForm === 'confirmation') {
         return React.createElement(
             'div',
-            null,
+            { id: 'confirm' },
             React.createElement(
-                'h1',
+                'h2',
                 null,
-                'Confirmation Page'
+                'Confirmation'
             ),
             React.createElement(
                 'div',
@@ -457,7 +469,7 @@ var Confirmation = function Confirmation(props) {
             ),
             React.createElement(
                 'button',
-                { type: 'button', onClick: function onClick() {
+                { id: 'purchase', type: 'button', onClick: function onClick() {
                         return props.nextStep();
                     } },
                 'Purchase'

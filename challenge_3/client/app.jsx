@@ -90,7 +90,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                {this.state.currentForm === 'home' ? (<button onClick={() => this.nextStep()}>Checkout</button>) : (null)}
+                {this.state.currentForm === 'home' ? (<button id="checkout" onClick={() => this.nextStep()}>Checkout</button>) : (null)}
                 <Checkout currentForm={this.state.currentForm}
                     prevStep={this.prevStep.bind(this)}
                     nextStep={this.nextStep.bind(this)}
@@ -125,15 +125,17 @@ class Checkout extends React.Component {
         if (this.props.currentForm === 'userInfo') {
             return (
                 <form id="userInfo">
-                    <h1>User Info</h1>
+                    <h2>User Info</h2>
                     Name:<input type="text" onChange={(e) => this.onInputChange('name', e.target.value)} value={this.state.name}></input>
                     Email:<input type="text" onChange={(e) => this.onInputChange('email', e.target.value)} value={this.state.email}></input>
                     Password:<input type="password" onChange={(e) => this.onInputChange('password', e.target.value)} value={this.state.password}></input>
-                    <button type="button" onClick={() => this.props.prevStep()}>Back Home</button>
-                    <button type="button" onClick={() => {
-                        this.props.nextStep()
-                        this.props.sendState(this.state);
-                    }}>On to Shipping Address!</button>
+                    <div className="nextBackContainer">
+                        <button className="nextBack" type="button" onClick={() => this.props.prevStep()}>&lt;&lt;&lt;</button>
+                        <button className="nextBack" type="button" onClick={() => {
+                            this.props.nextStep()
+                            this.props.sendState(this.state);
+                        }}>&gt;&gt;&gt;</button>
+                    </div>
                 </form>
             )
         } else {
@@ -167,19 +169,20 @@ class Address extends React.Component {
         if (this.props.currentForm === 'address') {
             return (
                 <form id="address">
-                    <h1>Address</h1>
+                    <h2>Address</h2>
                     Address Line 1:<input type="text" onChange={(e) => this.onInputChange('ad1', e.target.value)} value={this.state.ad1}></input>
                     Address Line 2:<input type="text" onChange={(e) => this.onInputChange('ad2', e.target.value)} value={this.state.ad2}></input>
                     City:<input type="text" onChange={(e) => this.onInputChange('city', e.target.value)} value={this.state.city}></input>
                     State:<input type="text" onChange={(e) => this.onInputChange('state', e.target.value)} value={this.state.state}></input>
                     Zipcode:<input type="text" onChange={(e) => this.onInputChange('shipZip', e.target.value)} value={this.state.shipZip}></input>
                     Phone Number:<input type="text" onChange={(e) => this.onInputChange('phone', e.target.value)} value={this.state.phone}></input>
-
-                    <button type="button" onClick={() => this.props.prevStep()}>Back to User Info</button>
-                    <button type="button" onClick={() => {
-                        this.props.nextStep()
-                        this.props.sendState(this.state);
-                    }}>On to Credit Card Info!</button>
+                    <div className="nextBackContainer">
+                        <button className="nextBack" type="button" onClick={() => this.props.prevStep()}>&lt;&lt;&lt;</button>
+                        <button className="nextBack" type="button" onClick={() => {
+                            this.props.nextStep()
+                            this.props.sendState(this.state);
+                        }}>&gt;&gt;&gt;</button>
+                    </div>
                 </form>
             )
         } else {
@@ -211,16 +214,18 @@ class Ccinfo extends React.Component {
         if (this.props.currentForm === 'ccinfo') {
             return (
                 <form id="ccInfo">
-                    <h1>Credit Card Info</h1>
+                    <h2>Credit Card</h2>
                     Credit Card Number:<input type="text" onChange={(e) => this.onInputChange('ccNum', e.target.value)} value={this.state.ccNum}></input>
                     Expiry Date:<input type="month" onChange={(e) => this.onInputChange('expiry', e.target.value)} value={this.state.expiry}></input>
                     CVV:<input type="text" onChange={(e) => this.onInputChange('cvv', e.target.value)} value={this.state.cvv}></input>
                     Billing ZIPCode:<input type="text" onChange={(e) => this.onInputChange('billZip', e.target.value)} value={this.state.billZip}></input>
-                    <button type="button" onClick={() => this.props.prevStep()}>Back to Address</button>
-                    <button type="button" onClick={() => {
-                        this.props.nextStep();
-                        this.props.sendState(this.state);
-                    }}>Summary</button>
+                    <div className="nextBackContainer">
+                        <button className="nextBack" type="button" onClick={() => this.props.prevStep()}>&lt;&lt;&lt;</button>
+                        <button className="nextBack" type="button" onClick={() => {
+                            this.props.nextStep()
+                            this.props.sendState(this.state);
+                        }}>&gt;&gt;&gt;</button>
+                    </div>
                 </form>
             )
         } else {
@@ -232,8 +237,8 @@ class Ccinfo extends React.Component {
 const Confirmation = (props) => {
     if (props.currentForm === 'confirmation') {
         return (
-            <div>
-                <h1>Confirmation Page</h1>
+            <div id="confirm">
+                <h2>Confirmation</h2>
                 <div>
                     <div>Name: {props.form.name}</div>
                     <div>Email: {props.form.email}</div>
@@ -250,7 +255,7 @@ const Confirmation = (props) => {
                     <div>CVV: {props.form.cvv}</div>
                     <div>Billing ZIP Code: {props.form.billZip}</div>
                 </div>
-                <button type="button" onClick={() => props.nextStep()}>Purchase</button>
+                <button id="purchase" type="button" onClick={() => props.nextStep()}>Purchase</button>
             </div>
         )
     } else {
