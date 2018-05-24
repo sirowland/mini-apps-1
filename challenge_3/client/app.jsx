@@ -5,26 +5,51 @@ class App extends React.Component {
 
         this.state = {
             currentForm: 'home',
-            formArray: ['home','userInfo','address','ccinfo', 'confirmation'],
+            formArray: ['home', 'userInfo', 'address', 'ccinfo', 'confirmation'],
             form1: {},
             form2: {},
             wholeForm: {}
         }
     }
 
-    f1Function(obj) {
+    postToMongo(url, obj) {
+        fetch(url, {
+            body: JSON.stringify(obj),
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+        .then((res) => console.log('Saved in DB'))
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    saveF1(obj) {
+        this.postToMongo('/users', obj);
+
         this.setState({
             form1: obj
         })
     }
 
-    f2Function(obj) {
+    saveF2(obj) {
+        // for (var key in obj) {
+        //     if (key !== '')
+        // }
+
+
+        this.postToMongo('/addresses', obj);
+
         this.setState({
             form2: obj
         })
     }
 
-    f3Function(obj) {
+    saveEntireForm(obj) {
+        this.postToMongo('/ccinfo', obj);
+
         var newObj = {}
         Object.assign(newObj, this.state.form1, this.state.form2, obj);
 
@@ -52,26 +77,19 @@ class App extends React.Component {
                 currentForm: this.state.formArray[index + 1]
             })
         }
-    } 
+    }
 
     render() {
-
-        // const checkoutButton = this.state.currentForm === 'home' ? (<button onClick={() => this.nextStep()}>Checkout</button>) : (null);
-        // const userInfo = this.state.currentForm === 'userInfo' ? (<Checkout prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f1Function.bind(this)} />) : (null);
-        // const address = this.state.currentForm === 'address' ? (<Address prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f2Function.bind(this)} />) : (null);
-        // const ccinfo = this.state.currentForm === 'ccinfo' ? (<Ccinfo prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f3Function.bind(this)} />) : (null);
-        // const confirmation = this.state.currentForm === 'confirmation' ? (<Confirmation prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} form={this.state.wholeForm}/>) : (null);
-
         return (
             <div>
                 {this.state.currentForm === 'home' ? (<button onClick={() => this.nextStep()}>Checkout</button>) : (null)}
-                <Checkout currentForm={this.state.currentForm} 
-                          prevStep={this.prevStep.bind(this)} 
-                          nextStep={this.nextStep.bind(this)} 
-                          sendState={this.f1Function.bind(this)} />
-                <Address currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f2Function.bind(this)} />
-                <Ccinfo currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f3Function.bind(this)} />
-                <Confirmation currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} form={this.state.wholeForm}/>
+                <Checkout currentForm={this.state.currentForm}
+                    prevStep={this.prevStep.bind(this)}
+                    nextStep={this.nextStep.bind(this)}
+                    sendState={this.saveF1.bind(this)} />
+                <Address currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.saveF2.bind(this)} />
+                <Ccinfo currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.saveEntireForm.bind(this)} />
+                <Confirmation currentForm={this.state.currentForm} prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} form={this.state.wholeForm} />
             </div>
         )
     }
@@ -85,7 +103,7 @@ class Checkout extends React.Component {
         this.state = {
             name: '',
             email: '',
-            pass: ''
+            password: ''
         }
     }
 
@@ -100,11 +118,9 @@ class Checkout extends React.Component {
             return (
                 <form id="userInfo">
                     <h1>User Info</h1>
-                    Name:<input type="text" 
-                                onChange={(e) => this.onInputChange('name', e.target.value)}
-                                value={this.state.name}></input>
+                    Name:<input type="text" onChange={(e) => this.onInputChange('name', e.target.value)} value={this.state.name}></input>
                     Email:<input type="text" onChange={(e) => this.onInputChange('email', e.target.value)} value={this.state.email}></input>
-                    Password:<input type="password" onChange={(e) => this.onInputChange('pass', e.target.value)} value={this.state.pass}></input>
+                    Password:<input type="password" onChange={(e) => this.onInputChange('password', e.target.value)} value={this.state.password}></input>
                     <button type="button" onClick={() => this.props.prevStep()}>Back Home</button>
                     <button type="button" onClick={() => {
                         this.props.nextStep()
@@ -150,6 +166,7 @@ class Address extends React.Component {
                     State:<input type="text" onChange={(e) => this.onInputChange('state', e.target.value)} value={this.state.state}></input>
                     Zipcode:<input type="text" onChange={(e) => this.onInputChange('shipZip', e.target.value)} value={this.state.shipZip}></input>
                     Phone Number:<input type="text" onChange={(e) => this.onInputChange('phone', e.target.value)} value={this.state.phone}></input>
+
                     <button type="button" onClick={() => this.props.prevStep()}>Back to User Info</button>
                     <button type="button" onClick={() => {
                         this.props.nextStep()
@@ -193,8 +210,8 @@ class Ccinfo extends React.Component {
                     Billing ZIPCode:<input type="text" onChange={(e) => this.onInputChange('billZip', e.target.value)} value={this.state.billZip}></input>
                     <button type="button" onClick={() => this.props.prevStep()}>Back to Address</button>
                     <button type="button" onClick={() => {
-                            this.props.nextStep();
-                            this.props.sendState(this.state);
+                        this.props.nextStep();
+                        this.props.sendState(this.state);
                     }}>Summary</button>
                 </form>
             )

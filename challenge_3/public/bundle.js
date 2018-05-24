@@ -29,22 +29,48 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
-        key: 'f1Function',
-        value: function f1Function(obj) {
+        key: 'postToMongo',
+        value: function postToMongo(url, obj) {
+            fetch(url, {
+                body: JSON.stringify(obj),
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(function (res) {
+                return console.log('Saved in DB');
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'saveF1',
+        value: function saveF1(obj) {
+            this.postToMongo('/users', obj);
+
             this.setState({
                 form1: obj
             });
         }
     }, {
-        key: 'f2Function',
-        value: function f2Function(obj) {
+        key: 'saveF2',
+        value: function saveF2(obj) {
+            // for (var key in obj) {
+            //     if (key !== '')
+            // }
+
+
+            this.postToMongo('/addresses', obj);
+
             this.setState({
                 form2: obj
             });
         }
     }, {
-        key: 'f3Function',
-        value: function f3Function(obj) {
+        key: 'saveEntireForm',
+        value: function saveEntireForm(obj) {
+            this.postToMongo('/ccinfo', obj);
+
             var newObj = {};
             Object.assign(newObj, this.state.form1, this.state.form2, obj);
 
@@ -80,12 +106,6 @@ var App = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            // const checkoutButton = this.state.currentForm === 'home' ? (<button onClick={() => this.nextStep()}>Checkout</button>) : (null);
-            // const userInfo = this.state.currentForm === 'userInfo' ? (<Checkout prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f1Function.bind(this)} />) : (null);
-            // const address = this.state.currentForm === 'address' ? (<Address prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f2Function.bind(this)} />) : (null);
-            // const ccinfo = this.state.currentForm === 'ccinfo' ? (<Ccinfo prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} sendState={this.f3Function.bind(this)} />) : (null);
-            // const confirmation = this.state.currentForm === 'confirmation' ? (<Confirmation prevStep={this.prevStep.bind(this)} nextStep={this.nextStep.bind(this)} form={this.state.wholeForm}/>) : (null);
-
             return React.createElement(
                 'div',
                 null,
@@ -99,9 +119,9 @@ var App = function (_React$Component) {
                 React.createElement(Checkout, { currentForm: this.state.currentForm,
                     prevStep: this.prevStep.bind(this),
                     nextStep: this.nextStep.bind(this),
-                    sendState: this.f1Function.bind(this) }),
-                React.createElement(Address, { currentForm: this.state.currentForm, prevStep: this.prevStep.bind(this), nextStep: this.nextStep.bind(this), sendState: this.f2Function.bind(this) }),
-                React.createElement(Ccinfo, { currentForm: this.state.currentForm, prevStep: this.prevStep.bind(this), nextStep: this.nextStep.bind(this), sendState: this.f3Function.bind(this) }),
+                    sendState: this.saveF1.bind(this) }),
+                React.createElement(Address, { currentForm: this.state.currentForm, prevStep: this.prevStep.bind(this), nextStep: this.nextStep.bind(this), sendState: this.saveF2.bind(this) }),
+                React.createElement(Ccinfo, { currentForm: this.state.currentForm, prevStep: this.prevStep.bind(this), nextStep: this.nextStep.bind(this), sendState: this.saveEntireForm.bind(this) }),
                 React.createElement(Confirmation, { currentForm: this.state.currentForm, prevStep: this.prevStep.bind(this), nextStep: this.nextStep.bind(this), form: this.state.wholeForm })
             );
         }
@@ -121,7 +141,7 @@ var Checkout = function (_React$Component2) {
         _this3.state = {
             name: '',
             email: '',
-            pass: ''
+            password: ''
         };
         return _this3;
     }
@@ -146,19 +166,17 @@ var Checkout = function (_React$Component2) {
                         'User Info'
                     ),
                     'Name:',
-                    React.createElement('input', { type: 'text',
-                        onChange: function onChange(e) {
+                    React.createElement('input', { type: 'text', onChange: function onChange(e) {
                             return _this4.onInputChange('name', e.target.value);
-                        },
-                        value: this.state.name }),
+                        }, value: this.state.name }),
                     'Email:',
                     React.createElement('input', { type: 'text', onChange: function onChange(e) {
                             return _this4.onInputChange('email', e.target.value);
                         }, value: this.state.email }),
                     'Password:',
                     React.createElement('input', { type: 'password', onChange: function onChange(e) {
-                            return _this4.onInputChange('pass', e.target.value);
-                        }, value: this.state.pass }),
+                            return _this4.onInputChange('password', e.target.value);
+                        }, value: this.state.password }),
                     React.createElement(
                         'button',
                         { type: 'button', onClick: function onClick() {
