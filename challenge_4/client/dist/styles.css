@@ -7,6 +7,10 @@ body, html {
     flex-direction: column;
 }
 
+#turn {
+    text-align: center;
+}
+
 #board {
     display: flex;
 }

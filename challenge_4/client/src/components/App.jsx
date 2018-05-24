@@ -22,10 +22,14 @@ class App extends React.Component {
         this.columnClicked = this.columnClicked.bind(this);
     }
 
+    checkForWin() {
+        
+    }
+
     columnClicked(xCoordinate) {
         var column = this.state.board[xCoordinate];
         var newBoard = this.state.board.slice();
-        var turn = !this.state.blacksTurn;
+        var newTurn = !this.state.blacksTurn;
 
         for (var i = column.length - 1; i > -1; i--) {
             if (column[i] === 'empty' && this.state.blacksTurn === true) {
@@ -36,23 +40,24 @@ class App extends React.Component {
                 break;
             }
         }
+
         newBoard[xCoordinate] = column;
+
         this.setState({
             board: newBoard,
-            blacksTurn: turn
+            blacksTurn: newTurn
         });
     }
 
     render() {
         return (
-            <div id="board">
-                <Column colNumber={0} column={this.state.board[0]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={1} column={this.state.board[1]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={2} column={this.state.board[2]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={3} column={this.state.board[3]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={4} column={this.state.board[4]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={5} column={this.state.board[5]} columnClicked={this.columnClicked} rows={this.state.rows} />
-                <Column colNumber={6} column={this.state.board[6]} columnClicked={this.columnClicked} rows={this.state.rows} />
+            <div>
+                {this.state.blacksTurn ? (<h3 id="turn">Black's turn!</h3>) : (<h3 id="turn">Red's turn!</h3>)}
+                <div id="board">
+                    {this.state.board.map((column, i) => 
+                        <Column colNumber={i} column={this.state.board[i]} key={i} columnClicked = {this.columnClicked} />
+                    )}
+                </div>
             </div>
         )
     }

@@ -1,23 +1,18 @@
 import React from 'react';
 
-class Slot extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        if (this.props.color === 'red') {
+const Slot = (props) => {{
+        if (props.color === 'red') {
             var style = 'red';
-        } else if (this.props.color === 'black') {
+        } else if (props.color === 'black') {
             var style = 'black';
         } else {
             var style = 'white';  
         }
 
         return (
-            <div className="slot" onClick={() => {this.props.columnClicked(this.props.x)}}>
+            <div className="slot" onClick={() => {props.columnClicked(props.x)}}>
                 <div className="circle" style={{backgroundColor : style}}>
-                    {this.props.x + ',' + this.props.y}
+                    {props.x + ',' + props.y}
                 </div>
             </div>
         );
