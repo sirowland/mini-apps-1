@@ -37,8 +37,6 @@ var App = function (_React$Component) {
                 headers: {
                     'content-type': 'application/json'
                 }
-            }).then(function (res) {
-                return console.log('Saved in DB');
             }).catch(function (err) {
                 console.log(err);
             });
@@ -55,10 +53,19 @@ var App = function (_React$Component) {
     }, {
         key: 'saveF2',
         value: function saveF2(obj) {
-            // for (var key in obj) {
-            //     if (key !== '')
-            // }
-
+            var address = [];
+            for (var key in obj) {
+                if (key !== 'shipZip' && key !== 'phone') {
+                    if (obj[key]) {
+                        address.push(obj[key]);
+                        delete obj[key];
+                    } else {
+                        delete obj[key];
+                    }
+                }
+            }
+            address = address.join(',');
+            obj['address'] = address;
 
             this.postToMongo('/addresses', obj);
 
@@ -395,7 +402,7 @@ var Confirmation = function Confirmation(props) {
                     'div',
                     null,
                     'Password: ',
-                    props.form.pass
+                    props.form.password
                 )
             ),
             React.createElement(
@@ -404,26 +411,8 @@ var Confirmation = function Confirmation(props) {
                 React.createElement(
                     'div',
                     null,
-                    'Address Line 1: ',
-                    props.form.ad1
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    'Address Line 2: ',
-                    props.form.ad2
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    'City: ',
-                    props.form.city
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    'State: ',
-                    props.form.state
+                    'Address: ',
+                    props.form.address
                 ),
                 React.createElement(
                     'div',

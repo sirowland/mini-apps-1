@@ -21,13 +21,26 @@ app.post('/users', (req, res) => {
         if (err) {
             console.log(err);
         }
+        res.send();
     });
 });
 
 app.post('/addresses', (req, res) => {
-    console.log(req.body);
+    var address = new Address(req.body);
+    address.save((err) => {
+        if (err) {
+            console.log(err);
+        }
+        res.send();
+    });
 });
 
 app.post('/ccinfo', (req, res) => {
-    console.log(req.body);
+    var ccinfo = new CreditCard(req.body);
+    ccinfo.save((err) => {
+        if (err) {
+            console.log(err);
+        }
+        res.send();
+    });
 });

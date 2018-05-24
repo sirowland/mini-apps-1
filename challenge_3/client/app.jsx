@@ -20,7 +20,6 @@ class App extends React.Component {
                 'content-type': 'application/json'
             },
         })
-        .then((res) => console.log('Saved in DB'))
         .catch((err) => {
             console.log(err);
         });
@@ -35,16 +34,25 @@ class App extends React.Component {
     }
 
     saveF2(obj) {
-        // for (var key in obj) {
-        //     if (key !== '')
-        // }
-
+        var address = [];
+        for (var key in obj) {
+            if (key !== 'shipZip' && key !== 'phone') {
+                if (obj[key]) {
+                    address.push(obj[key]);
+                    delete obj[key];
+                } else {
+                    delete obj[key];
+                }
+            }
+        }
+        address = address.join(',');
+        obj['address'] = address;
 
         this.postToMongo('/addresses', obj);
 
         this.setState({
             form2: obj
-        })
+        });
     }
 
     saveEntireForm(obj) {
@@ -229,13 +237,10 @@ const Confirmation = (props) => {
                 <div>
                     <div>Name: {props.form.name}</div>
                     <div>Email: {props.form.email}</div>
-                    <div>Password: {props.form.pass}</div>
+                    <div>Password: {props.form.password}</div>
                 </div>
                 <div>
-                    <div>Address Line 1: {props.form.ad1}</div>
-                    <div>Address Line 2: {props.form.ad2}</div>
-                    <div>City: {props.form.city}</div>
-                    <div>State: {props.form.state}</div>
+                    <div>Address: {props.form.address}</div>
                     <div>Zip: {props.form.shipZip}</div>
                     <div>Phone Number: {props.form.phone}</div>
                 </div>

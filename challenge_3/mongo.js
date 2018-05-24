@@ -26,6 +26,6 @@ var ccSchema = mongoose.Schema({
     billZip: String
 });
 
-var User = module.exports.user = mongoose.model('User', userSchema);
-var Address = module.exports.address = mongoose.model('Address', addressSchema);
-var CreditCard = module.exports.creditcard = mongoose.model('Credit', ccSchema);
+var User = module.exports.user = mongoose.model('Users', userSchema);
+var Address = module.exports.address = mongoose.model('Addresses', addressSchema);
+var CreditCard = module.exports.creditcard = mongoose.model('CreditCards', ccSchema);
